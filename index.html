@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js"
+        integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+</head>
+
+<style>
+    .balken-hintergrund {
+        width: 100%;
+        /* Breite des Balkens */
+        height: 50px;
+        /* Höhe des Balkens */
+        background-color: #d1d1d1;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .balken {
+        width: 10%;
+        /* Füllstand des Balkens */
+        height: 100%;
+        background-color: #4CAF50;
+        /* Grün */
+    }
+
+    h1 {
+        position: relative;
+        left: 45%;
+        /* top: -450px; */
+        color: rgb(255, 0, 0);
+    }
+
+    h2 {
+        position: relative;
+        left: 45%;
+        top: 100%;
+        color: rgb(4, 81, 248)
+    }
+
+    .neustart {
+        position: relative;
+        left: -45%;
+        top: 100%
+    }
+</style>
+
+<body style="background-color: rgb(151, 151, 151); color: rgb(0, 0, 0);">
+    <div style="width: 100vw; height: 100vh;">
+        <div>
+            <h1>Click!</h1>
+            <h2>Adam´s spiel</h2>
+        </div>
+        <div style="display: flex;justify-content: center;padding-top: 10%">
+            <div>
+                <div style="padding: 10px;">
+                    <span id="score"></span>
+                </div>
+                <div style="width: 600px">
+                    <span id="indicator" style="background-color: black; width: 1px;margin-left: 50%;">d</span>
+                </div>
+
+                <div class="balken-hintergrund">
+                    <div id="balken" class="balken"></div>
+                </div>
+            </div>
+
+            <div style="padding-top: 100px; ; ">
+                <button id="go">Click!</button>
+                <button class="neustart" onclick="location.reload()">neustart</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    var breite = 95
+    var balken = $('#balken')
+    balken.css({
+        width: breite + '%'
+    })
+    var oben = 0.5
+
+    var indicatorPos = Math.floor(Math.random() * (101));
+    console.log(indicatorPos)
+    var indicator = $('#indicator')
+    var score = $('#score')
+
+    indicator.css({
+        'margin-left': indicatorPos + '%'
+    })
+
+    function rechts() {
+        var balken = $('#balken')
+        var cssbreite = breite + '%'
+        balken.css({
+            width: cssbreite
+        })
+        breite = breite + oben
+        if (breite == 100) {
+            oben = oben - 0.5
+        }
+
+        if (breite == 0) {
+            oben = oben + 0.5
+        }
+    }
+
+    $('#go').on('click', function () {
+        if (breite > indicatorPos) {
+            console.log(breite - indicatorPos)
+            score.text(breite - indicatorPos)
+        }
+
+        if (breite < indicatorPos) {
+            console.log((breite - indicatorPos) * -1)
+            score.text((breite - indicatorPos) * -1)
+        }
+
+        if (breite == indicatorPos)
+            score.text(0)
+
+        clearInterval(inter)
+    })
+    var inter = setInterval(() => {
+        rechts()
+    }, 50);
+
+
+</script>
