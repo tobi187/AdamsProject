@@ -45,7 +45,13 @@
     .neustart {
         position: relative;
         left: -45%;
-        top: 100%
+        top: 30%
+    }
+
+    .highscore {
+        position: relative;
+        left: -100%;
+        top: -50%;
     }
 </style>
 
@@ -72,6 +78,7 @@
             <div style="padding-top: 100px; ; ">
                 <button id="go">Click!</button>
                 <button class="neustart" onclick="location.reload()">neustart</button>
+                <h3 id="highscore" class="highscore">highscore: </h3>
             </div>
         </div>
     </div>
@@ -80,6 +87,7 @@
 </html>
 
 <script>
+
     var breite = 95
     var balken = $('#balken')
     balken.css({
@@ -91,6 +99,11 @@
     console.log(indicatorPos)
     var indicator = $('#indicator')
     var score = $('#score')
+
+    var aktuelleHighscores = 0
+    aktuelleHighscores = parseInt(localStorage.getItem('high_score'))
+    var aktuelleHighscoresHtml = $('#highscore')
+    aktuelleHighscoresHtml.text('highscores: ' + aktuelleHighscores)
 
     indicator.css({
         'margin-left': indicatorPos + '%'
@@ -123,14 +136,17 @@
             score.text((breite - indicatorPos) * -1)
         }
 
-        if (breite == indicatorPos)
+        if (breite == indicatorPos) {
             score.text(0)
+            aktuelleHighscores = aktuelleHighscores + 1
+            aktuelleHighscoresHtml.text('highscores: ' + aktuelleHighscores)
+            localStorage.setItem('high_score', aktuelleHighscores)
+        }
 
         clearInterval(inter)
     })
+
     var inter = setInterval(() => {
         rechts()
     }, 50);
-
-
 </script>
