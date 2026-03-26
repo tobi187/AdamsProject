@@ -101,7 +101,7 @@
     var score = $('#score')
 
     var aktuelleHighscores = 0
-    aktuelleHighscores = parseInt(localStorage.getItem('high_score'))
+    aktuelleHighscores = parseInt(localStorage.getItem('high_score') ?? '0')
     var aktuelleHighscoresHtml = $('#highscore')
     aktuelleHighscoresHtml.text('highscores: ' + aktuelleHighscores)
 
